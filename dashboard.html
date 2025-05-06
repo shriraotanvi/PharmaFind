@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaFind - Pharmacy Management System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* PharmaFind - Pharmacy Management System CSS */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4ecca3;
+            --secondary-color: #2c7873;
+            --light-color: #e2f3ec;
+            --accent-color: #75cfb8;
+            --dark-text: #333;
+            --light-text: #f5f5f5;
+            --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --hover-transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-text);
+            line-height: 1.6;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* Header Styles */
+        header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-container {
+            text-align: center;
+        }
+
+        .logo-container h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .logo-container h1 span {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-bottom: 2rem;
+        }
+
+        .daily-insight {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0.5rem;
+        }
+
+        .daily-insight p {
+            font-style: italic;
+            color: var(--secondary-color);
+        }
+
+        /* User profile section */
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info {
+            text-align: right;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        .user-id {
+            font-size: 0.85rem;
+            color: var(--accent-color);
+        }
+
+        .logout-btn {
+            background-color: transparent;
+            color: var(--secondary-color);
+            border: 1px solid var(--secondary-color);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--hover-transition);
+        }
+
+        .logout-btn:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        /* Card Styles */
+        .featured-card {
+            background-color: white;
+            box-shadow: 0 10px 20px rgba(44, 120, 115, 0.2);
+            border: 2px solid var(--accent-color);
+        }
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: var(--card-shadow);
+            transition: var(--hover-transition);
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h2 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            margin-bottom: 1.2rem;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .action-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.3rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--hover-transition);
+        }
+
+        .action-btn:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
+        /* Decoration */
+        .decoration {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .decoration-icon {
+            font-size: 3rem;
+            color: var(--accent-color);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--secondary-color);
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .close-modal {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .inventory-table {
+            width: 150%;
+            height: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+        }
+
+        .inventory-table th, .inventory-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 5px solid var(--light-color);
+        }
+
+        .inventory-table th {
+            background-color: var(--light-color);
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .card-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            header {
+                flex-direction: column;
+            }
+            
+            .user-profile {
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo-container h1 {
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <h1>Pharma<span>Find</span></h1>
+                <div class="tagline">Your Pharmacy Management Solution</div>
+            </div>
+            
+            <div class="user-profile">
+                <div class="user-info">
+                    <div class="user-name" id="user-name">Loading...</div>
+                    <div class="user-id" id="user-id">ID: Loading...</div>
+                </div>
+                <button class="logout-btn" id="logout-btn">Logout</button>
+            </div>
+        </header>
+
+        <div class="daily-insight">
+            <p><i>Effective inventory management leads to better patient care.</i></p>
+        </div>
+
+        <main>
+            <div class="card-container">
+                <div class="card">
+                    <h2>Customer Registration</h2>
+                    <p>Register new customers and manage customer profiles with contact information and medical history.</p>
+                    <button class="action-btn" id="customer-registration-btn">Register Customer</button>
+                </div>
+
+                <div class="card featured-card">
+                    <h2>Check Stock Status</h2>
+                    <p>Monitor inventory levels, get alerts for low stock, and generate reorder reports.</p>
+                    <button class="action-btn" id="check-stock-btn">View Inventory</button>
+                </div>
+
+                <div class="card">
+                    <h2>Add Medicine</h2>
+                    <p>Add new medications to inventory with details including dosage, manufacturer, and pricing.</p>
+                    <button class="action-btn" id="add-medicine-btn">Add Medicine</button>
+                </div>
+
+                <div class="card">
+                    <h2>Prescription Handling</h2>
+                    <p>Process prescriptions, track refills, and maintain medication history for each customer.</p>
+                    <button class="action-btn" id="prescription-handling-btn">Manage Prescriptions</button>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>MAKE YOUR PHARMACY MANAGEMENT A PRIORITY.</p>
+        </footer>
+    </div>
+
+    <!-- Inventory Modal -->
+    <div class="modal" id="inventory-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Medication Inventory</h2>
+                <span class="close-modal" id="close-inventory-modal">&times;</span>
+            </div>
+            <div id="inventory-container">
+                <p>Loading inventory data...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customers Modal -->
+    <div class="modal" id="customers-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Customer List</h2>
+                <span class="close-modal" id="close-customers-modal">&times;</span>
+            </div>
+            <div id="customers-container">
+                <p>Loading customer data...</p>
+            </div>
+            <div style="margin-top: 20px; text-align: center;">
+                <button class="action-btn" id="new-customer-btn">Add New Customer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Medicine Modal -->
+    <div class="modal" id="add-medicine-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Medicine</h2>
+                <span class="close-modal" id="close-add-medicine-modal">&times;</span>
+            </div>
+            <div class="form-container">
+                <div class="form-group">
+                    <label>Medicine Name</label>
+                    <input type="text" id="medicine-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="medicine-description" required>
+                </div>
+                <div class="form-group">
+                    <label>Dosage</label>
+                    <input type="text" id="medicine-dosage" required>
+                </div>
+                <div class="form-group">
+                    <label>Manufacturer</label>
+                    <input type="text" id="medicine-manufacturer" required>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" id="medicine-price" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="medicine-quantity" min="0" required>
+                </div>
+                <button class="action-btn" id="submit-medicine-btn">Add Medicine</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check authentication
+        window.onload = async function() {
+          const authToken = localStorage.getItem('authToken');
+          
+          if (!authToken) {
+            window.location.href = 'signin.html';
+            return;
+          }
+          
+          try {
+            const response = await fetch('http://localhost:3001/api/user', {
+              headers: {
+                'Authorization': `Bearer ${authToken}`
+              }
+            });
+            
+            if (!response.ok) {
+              throw new Error('Failed to fetch user data');
+            }
+            
+            const data = await response.json();
+            const user = data[0]; // Use the first user in the array
+      
+            if (user) {
+              document.getElementById('user-name').textContent = user.name;
+              document.getElementById('user-id').textContent = 'ID: ' + (user.pharmId || 'N/A');
+            } else {
+              document.getElementById('user-name').textContent = 'Unknown';
+              document.getElementById('user-id').textContent = 'ID: N/A';
+            }
+          } catch (err) {
+            console.error('Error loading user info:', err);
+          }
+        };
+      
+      
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', function() {
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('userInfo');
+          window.location.href = 'signin.html';
+        });
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Close modals when clicking the X
+        document.getElementById('close-inventory-modal').addEventListener('click', function() {
+            closeModal('inventory-modal');
+        });
+        
+        document.getElementById('close-customers-modal').addEventListener('click', function() {
+            closeModal('customers-modal');
+        });
+        
+        document.getElementById('close-add-medicine-modal').addEventListener('click', function() {
+            closeModal('add-medicine-modal');
+        });
+        
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === document.getElementById('inventory-modal')) {
+                closeModal('inventory-modal');
+            }
+            if (event.target === document.getElementById('customers-modal')) {
+                closeModal('customers-modal');
+            }
+            if (event.target === document.getElementById('add-medicine-modal')) {
+                closeModal('add-medicine-modal');
+            }
+        });
+      
+        // Customer Registration button
+        document.getElementById('customer-registration-btn').addEventListener('click', async function() {
+            openModal('customers-modal');
+            await loadCustomers();
+        });
+        
+        // Check Stock button
+        document.getElementById('check-stock-btn').addEventListener('click', async function() {
+            openModal('inventory-modal');
+            await loadInventory();
+        });
+      
+        // Add Medicine button
+        document.getElementById('add-medicine-btn').addEventListener('click', function() {
+            openModal('add-medicine-modal');
+        });
+      
+        // Prescription Handling button
+        document.getElementById('prescription-handling-btn').addEventListener('click', function() {
+            alert('Prescription handling functionality will be implemented in the future.');
+        });
+        
+        // New Customer button
+        document.getElementById('new-customer-btn').addEventListener('click', function() {
+            window.location.href = 'customer-registration.html';
+        });
+        
+        // Load customer list
+        async function loadCustomers() {
+            const customersContainer = document.getElementById('customers-container');
+            customersContainer.innerHTML = '<p>Loading customer data...</p>';
+            
+            try {
+                const authToken = localStorage.getItem('authToken');
+                const response = await fetch('http://localhost:3001/api/customers', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch customers');
+                }
+                
+                const customers = await response.json();
+                
+                if (customers.length === 0) {
+                    customersContainer.innerHTML = '<p>No customers registered yet.</p>';
+                    return;
+                }
+                
+                let tableHTML = `
+                    <table class="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                customers.forEach(customer => {
+                    tableHTML += `
+                        <tr>
+                            <td>${customer.name || 'N/A'}</td>
+                            <td>${customer.email || 'N/A'}</td>
+                            <td>${customer.phone || 'N/A'}</td>
+                            <td>${customer.address || 'N/A'}</td>
+                        </tr>
+                    `;
+                });
+                
+                tableHTML += `
+                        </tbody>
+                    </table>
+                `;
+                
+                customersContainer.innerHTML = tableHTML;
+            } catch (err) {
+                customersContainer.innerHTML = '<p>Error loading customer data. Please try again.</p>';
+                console.error(err);
+            }
+        }
+        
+        // Load inventory
+        async function loadInventory() {
+            const inventoryContainer = document.getElementById('inventory-container');
+            inventoryContainer.innerHTML = '<p>Loading inventory data...</p>';
+            
+            try {
+                const authToken = localStorage.getItem('authToken');
+                const response = await fetch('http://localhost:3001/api/medicines', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch medicines');
+                }
+                
+                const medicines = await response.json();
+                
+                if (medicines.length === 0) {
+                    inventoryContainer.innerHTML = '<p>No medicines in inventory yet.</p>';
+                    return;
+                }
+                
+                let tableHTML = `
+                    <table class="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Dosage</th>
+                                <th>Manufacturer</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                medicines.forEach(medicine => {
+                    tableHTML += `
+                        <tr>
+                            <td>${medicine.name || 'N/A'}</td>
+                            <td>${medicine.description || 'N/A'}</td>
+                            <td>${medicine.dosage || 'N/A'}</td>
+                            <td>${medicine.manufacturer || 'N/A'}</td>
+                            <td>$${medicine.price ? parseFloat(medicine.price).toFixed(2) : 'N/A'}</td>
+                            <td>${medicine.quantity || '0'}</td>
+                        </tr>
+                    `;
+                });
+                
+                tableHTML += `
+                        </tbody>
+                    </table>
+                `;
+                
+                inventoryContainer.innerHTML = tableHTML;
+            } catch (err) {
+                inventoryContainer.innerHTML = '<p>Error loading inventory data. Please try again.</p>';
+                console.error(err);
+            }
+        }
+        
+        // Add medicine form submission
+        document.getElementById('submit-medicine-btn').addEventListener('click', async function() {
+            const medicineName = document.getElementById('medicine-name').value;
+            const medicineDescription = document.getElementById('medicine-description').value;
+            const medicineDosage = document.getElementById('medicine-dosage').value;
+            const medicineManufacturer = document.getElementById('medicine-manufacturer').value;
+            const medicinePrice = document.getElementById('medicine-price').value;
+            const medicineQuantity = document.getElementById('medicine-quantity').value;
+            
+            if (!medicineName || !medicineDescription || !medicineDosage || 
+                !medicineManufacturer || !medicinePrice || !medicineQuantity) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            try {
+                const authToken = localStorage.getItem('authToken');
+                const response = await fetch('http://localhost:3001/api/medicines', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        name: medicineName,
+                        description: medicineDescription,
+                        dosage: medicineDosage,
+                        manufacturer: medicineManufacturer,
+                        price: parseFloat(medicinePrice),
+                        quantity: parseInt(medicineQuantity),
+                        pharmacy_id: 1
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to add medicine');
+                }
+                
+                const result = await response.json();
+                alert(`Medicine added successfully with ID: ${result.id}`);
+                
+                // Clear form fields
+                document.getElementById('medicine-name').value = '';
+                document.getElementById('medicine-description').value = '';
+                document.getElementById('medicine-dosage').value = '';
+                document.getElementById('medicine-manufacturer').value = '';
+                document.getElementById('medicine-price').value = '';
+                document.getElementById('medicine-quantity').value = '';
+                
+                // Close modal
+                closeModal('add-medicine-modal');
+                
+                // Refresh inventory if inventory modal is open
+                if (document.getElementById('inventory-modal').style.display === 'flex') {
+                    await loadInventory();
+                }
+            } catch (err) {
+                alert('Failed to add medicine: ' + err.message);
+            }
+        });
+      </script>
+</body>
+</html>

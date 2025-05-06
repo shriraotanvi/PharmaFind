@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaFind - Login/Signup</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* PharmaFind - Login/Signup CSS */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #4ecca3;
+            --secondary-color: #2c7873;
+            --light-color: #e2f3ec;
+            --accent-color: #75cfb8;
+            --dark-text: #333;
+            --light-text: #f5f5f5;
+            --card-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            --hover-transition: all 0.3s ease;
+            --error-color: #e74c3c;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-color);
+            color: var(--dark-text);
+            line-height: 1.6;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            display: flex;
+            box-shadow: var(--card-shadow);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .image-side {
+            background-color: var(--secondary-color);
+            flex: 1;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .logo-container h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.3rem;
+        }
+
+        .logo-container h1 span {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .tagline {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .image-side p {
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
+        .auth-side {
+            background-color: white;
+            flex: 1.2;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--light-color);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 0.8rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark-text);
+            opacity: 0.7;
+            transition: var(--hover-transition);
+        }
+
+        .tab.active {
+            color: var(--secondary-color);
+            opacity: 1;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .tab:hover {
+            opacity: 1;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form {
+            display: none;
+            flex-direction: column;
+        }
+
+        .form.active {
+            display: flex;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-text);
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid var(--light-color);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            transition: var(--hover-transition);
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .login-option {
+            margin-bottom: 1.2rem;
+        }
+
+        .option-selector {
+            display: flex;
+            background-color: var(--light-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .option-btn {
+            flex: 1;
+            text-align: center;
+            padding: 0.6rem;
+            cursor: pointer;
+            transition: var(--hover-transition);
+            font-size: 0.9rem;
+        }
+
+        .option-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+            font-weight: 500;
+        }
+
+        .login-field {
+            display: none;
+        }
+
+        .login-field.active {
+            display: block;
+        }
+
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--hover-transition);
+            margin-top: 1rem;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .form-footer {
+            margin-top: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .form-footer a {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .spinner {
+            display: none;
+            width: 24px;
+            height: 24px;
+            border: 3px solid var(--light-color);
+            border-radius: 50%;
+            border-top-color: var(--secondary-color);
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                width: 90%;
+            }
+
+            .image-side {
+                padding: 1.5rem;
+            }
+
+            .auth-side {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image-side">
+            <div class="logo-container">
+                <h1>Pharma<span>Find</span></h1>
+                <div class="tagline">Your Pharmacy Management Solution</div>
+            </div>
+            <i class="fas fa-pills" style="font-size: 4rem; margin: 1.5rem 0;"></i>
+            <p>Effective inventory management leads to better patient care.</p>
+        </div>
+        <div class="auth-side">
+            <div class="tabs">
+                <div class="tab active" id="login-tab">Sign In</div>
+                <div class="tab" id="signup-tab">Sign Up</div>
+            </div>
+            <div class="form-container">
+                <!-- Login Form -->
+                <form id="login-form" class="form active">
+                    <div class="login-option">
+                        <label>Sign in with:</label>
+                        <div class="option-selector">
+                            <div class="option-btn active" id="email-option">Email</div>
+                            <div class="option-btn" id="pharmid-option">Pharmacy ID</div>
+                        </div>
+                        
+                        <div class="login-field active" id="email-field">
+                            <div class="form-group">
+                                <label for="login-email">Email Address</label>
+                                <input type="email" id="login-email" placeholder="Enter your email" required>
+                                <div class="error-message" id="email-error">Please enter a valid email address</div>
+                            </div>
+                        </div>
+                        
+                        <div class="login-field" id="pharmid-field">
+                            <div class="form-group">
+                                <label for="login-pharmid">Pharmacy ID</label>
+                                <input type="text" id="login-pharmid" placeholder="Enter your Pharmacy ID" required>
+                                <div class="error-message" id="pharmid-error">Please enter a valid Pharmacy ID</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="Enter your password" required>
+                        <div class="error-message" id="password-error">Password is required</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="login-btn">Sign In</button>
+                    <div class="spinner" id="login-spinner"></div>
+                    
+                    <div class="form-footer">
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signup-form" class="form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                        <div class="error-message" id="name-error">Name is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email" required>
+                        <div class="error-message" id="signup-email-error">Please enter a valid email address</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-pharmid">Pharmacy ID</label>
+                        <input type="text" id="signup-pharmid" placeholder="Enter your Pharmacy ID" required>
+                        <div class="error-message" id="signup-pharmid-error">Pharmacy ID is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Create a password" required>
+                        <div class="error-message" id="signup-password-error">Password must be at least 8 characters</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+                        <div class="error-message" id="confirm-error">Passwords do not match</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="signup-btn">Create Account</button>
+                    <div class="spinner" id="signup-spinner"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+      // Check if user is already authenticated
+      window.onload = function() {
+        const authToken = localStorage.getItem('authToken');
+        if (authToken) {
+          window.location.href = 'dashboard.html';
+        }
+      };
+    
+      // Tab switching functionality
+      document.getElementById('login-tab').addEventListener('click', function() {
+        document.getElementById('login-tab').classList.add('active');
+        document.getElementById('signup-tab').classList.remove('active');
+        document.getElementById('login-form').classList.add('active');
+        document.getElementById('signup-form').classList.remove('active');
+      });
+    
+      document.getElementById('signup-tab').addEventListener('click', function() {
+        document.getElementById('signup-tab').classList.add('active');
+        document.getElementById('login-tab').classList.remove('active');
+        document.getElementById('signup-form').classList.add('active');
+        document.getElementById('login-form').classList.remove('active');
+      });
+    
+      // Login option switching
+      document.getElementById('email-option').addEventListener('click', function() {
+        document.getElementById('email-option').classList.add('active');
+        document.getElementById('pharmid-option').classList.remove('active');
+        document.getElementById('email-field').classList.add('active');
+        document.getElementById('pharmid-field').classList.remove('active');
+      });
+    
+      document.getElementById('pharmid-option').addEventListener('click', function() {
+        document.getElementById('pharmid-option').classList.add('active');
+        document.getElementById('email-option').classList.remove('active');
+        document.getElementById('pharmid-field').classList.add('active');
+        document.getElementById('email-field').classList.remove('active');
+      });
+    
+      // Login form submission
+      document.getElementById('login-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        let isValid = true;
+        
+        if (document.getElementById('email-option').classList.contains('active')) {
+          const email = document.getElementById('login-email').value;
+          if (!email || !email.includes('@')) {
+            document.getElementById('email-error').style.display = 'block';
+            isValid = false;
+          } else {
+            document.getElementById('email-error').style.display = 'none';
+          }
+        } else {
+          const pharmId = document.getElementById('login-pharmid').value;
+          if (!pharmId) {
+            document.getElementById('pharmid-error').style.display = 'block';
+            isValid = false;
+          } else {
+            document.getElementById('pharmid-error').style.display = 'none';
+          }
+        }
+        
+        const password = document.getElementById('login-password').value;
+        if (!password) {
+          document.getElementById('password-error').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('password-error').style.display = 'none';
+        }
+        
+        if (isValid) {
+          try {
+            document.getElementById('login-btn').style.display = 'none';
+            document.getElementById('login-spinner').style.display = 'block';
+            
+            const loginData = {
+              password: password
+            };
+            
+            if (document.getElementById('email-option').classList.contains('active')) {
+              loginData.email = document.getElementById('login-email').value;
+            } else {
+              loginData.pharmId = document.getElementById('login-pharmid').value;
+            }
+            
+            const response = await fetch('http://localhost:3001/api/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(loginData)
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+              throw new Error(data.error || 'Login failed');
+            }
+            
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('userInfo', JSON.stringify(data.user));
+            window.location.href = 'dashboard.html';
+          } catch (err) {
+            alert(err.message);
+            document.getElementById('login-btn').style.display = 'block';
+            document.getElementById('login-spinner').style.display = 'none';
+          }
+        }
+      });
+    
+      // Signup form submission
+      document.getElementById('signup-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        let isValid = true;
+        
+        const name = document.getElementById('signup-name').value;
+        if (!name) {
+          document.getElementById('name-error').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('name-error').style.display = 'none';
+        }
+        
+        const email = document.getElementById('signup-email').value;
+        if (!email || !email.includes('@')) {
+          document.getElementById('signup-email-error').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('signup-email-error').style.display = 'none';
+        }
+        
+        const pharmId = document.getElementById('signup-pharmid').value;
+        if (!pharmId) {
+          document.getElementById('signup-pharmid-error').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('signup-pharmid-error').style.display = 'none';
+        }
+        
+        const password = document.getElementById('signup-password').value;
+        if (!password || password.length < 8) {
+          document.getElementById('signup-password-error').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('signup-password-error').style.display = 'none';
+        }
+        
+        const confirmPassword = document.getElementById('confirm-password').value;
+        if (password !== confirmPassword) {
+          document.getElementById('confirm-error').style.display = 'block';
+          isValid = false;
+        } else {
+          document.getElementById('confirm-error').style.display = 'none';
+        }
+        
+        if (isValid) {
+          try {
+            document.getElementById('signup-btn').style.display = 'none';
+            document.getElementById('signup-spinner').style.display = 'block';
+            
+            const response = await fetch('http://localhost:3001/api/register', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify({
+                name,
+                email,
+                pharmId,
+                password
+              })
+            });
+            
+            const data = await response.json();
+            
+            if (!response.ok) {
+              throw new Error(data.error || 'Registration failed');
+            }
+            
+            localStorage.setItem('authToken', data.token);
+            localStorage.setItem('userInfo', JSON.stringify(data.user));
+            window.location.href = 'dashboard.html';
+          } catch (err) {
+            alert(err.message);
+            document.getElementById('signup-btn').style.display = 'block';
+            document.getElementById('signup-spinner').style.display = 'none';
+          }
+        }
+      });
+    </script>
+</body>
+</html>
